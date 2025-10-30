@@ -29,4 +29,34 @@ export class DiaryService {
   delete(id: string) {
     return this.prisma.diaryEntry.delete({ where: { id } });
   }
+
+  async getByDate(year: number, month: number, day: number) {
+    const start = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
+    const end = new Date(Date.UTC(year, month - 1, day + 1, 0, 0, 0));
+    const items = await this.prisma.diaryEntry.findMany({
+      where: { entryDate: { gte: start, lt: end } },
+      orderBy: { entryDate: 'asc' },
+    });
+    return items;
+  }
+
+  async getByMonth(year: number, month: number) {
+    const start = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
+    const end = new Date(Date.UTC(year, month, 1, 0, 0, 0));
+    const items = await this.prisma.diaryEntry.findMany({
+      where: { entryDate: { gte: start, lt: end } },
+      orderBy: { entryDate: 'asc' },
+    });
+    return items;
+  }
+
+  async getByYear(year: number) {
+    const start = new Date(Date.UTC(year, 0, 1, 0, 0, 0));
+    const end = new Date(Date.UTC(year + 1, 0, 1, 0, 0, 0));
+    const items = await this.prisma.diaryEntry.findMany({
+      where: { entryDate: { gte: start, lt: end } },
+      orderBy: { entryDate: 'asc' },
+    });
+    return items;
+  }
 }

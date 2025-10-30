@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, Query } from '@nestjs/common';
 import { DiaryService } from './diary.service';
 
 @Controller('diary')
@@ -6,7 +6,20 @@ export class DiaryController {
   constructor(private readonly diaryService: DiaryService) {}
 
   @Get()
-  getAll() {
+  getAll(
+    @Query('year') year?: string,
+    @Query('month') month?: string,
+    @Query('day') day?: string,
+  ) {
+    if (year && month && day) {
+      return this.diaryService.getByDate(+year, +month, +day);
+    }
+    if (year && month) {
+      return this.diaryService.getByMonth(+year, +month);
+    }
+    if (year) {
+      return this.diaryService.getByYear(+year);
+    }
     return this.diaryService.getAll();
   }
 
