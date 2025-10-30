@@ -7,4 +7,4 @@ import { PrismaService } from '../prisma.service';
   controllers: [TodosController],
   providers: [TodosService, PrismaService],
 })
-export class TodosModule {}
+export class TodoModule {}
