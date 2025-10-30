@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DiaryModule } from './diary/diary.module';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
-  imports: [DiaryModule],
+  imports: [DiaryModule, TodoModule],
   controllers: [AppController],
   providers: [AppService],
 })
