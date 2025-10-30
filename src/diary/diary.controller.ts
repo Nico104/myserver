@@ -1,27 +1,32 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
+import { DiaryService } from './diary.service';
 
 @Controller('diary')
 export class DiaryController {
-  @Post()
-  async create(@Body() body: any) {
-    const entry = await prisma.diaryEntry.create({
-      data: {
-        entryDate: new Date(body.entryDate),
-        title: body.title ?? null,
-        bodyMd: body.bodyMd,
-        tags: body.tags ?? [],
-        rating: body.rating ?? null,
-      },
-    });
-    return entry;
-  }
+  constructor(private readonly diaryService: DiaryService) {}
 
   @Get()
-  async all() {
-    return prisma.diaryEntry.findMany();
+  getAll() {
+    return this.diaryService.getAll();
+  }
+
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    return this.diaryService.getOne(id);
+  }
+
+  @Post()
+  create(@Body() data: any) {
+    return this.diaryService.create(data);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() data: any) {
+    return this.diaryService.update(id, data);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.diaryService.delete(id);
   }
 }
-

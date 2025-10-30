@@ -7,7 +7,7 @@ import { TodolistModule } from './todolist/todolist.module';
 
 @Module({
   imports: [DiaryModule, TodoModule, TodolistModule],
-  controllers: [AppController],
-  providers: [AppService],
+  // controllers: [AppController],
+  // providers: [AppService],
 })
 export class AppModule {}
