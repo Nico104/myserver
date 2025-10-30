@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DiaryModule } from './diary/diary.module';
-import { TodoModules } from './todo/todo.module';
+import { TodosModule } from './todo/todo.module';
 import { TodolistModule } from './todolist/todolist.module';
 
 @Module({
