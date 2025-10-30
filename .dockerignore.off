@@ -1,0 +1,10 @@
+# keep source files INCLUDED; only ignore what we truly don't need
+node_modules
+npm-debug.log
+.git
+.gitignore
+dist
+Dockerfile
+docker-compose.yml
+.env
+

@@ -1,0 +1,40 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model DiaryEntry {
+  id         String   @id @default(uuid())
+  entryDate  DateTime
+  title      String?
+  bodyMd     String
+  tags       String[] @default([])
+  rating     Int?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model TodoList {
+  id     String @id @default(uuid())
+  name   String?
+  todos  Todo[]
+}
+
+model Todo {
+  id        String  @id @default(uuid())
+  listId    String?
+  list      TodoList? @relation(fields: [listId], references: [id])
+  text      String
+  completed Boolean @default(false)
+  cal_event Boolean @default(false)
+  dueAt     DateTime?
+  priority  Int     @default(0)
+  meta      Json    @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
