@@ -38,3 +38,27 @@ model Todo {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
 }
+
+model Note {
+  id         String    @id @default(uuid())
+  title      String?
+  bodyMd     String
+  tags       String[]  @default([])
+  meta       Json      @default("{}")
+  planId     String?   // optional link to a Plan
+  plan       Plan?     @relation(fields: [planId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+}
+
+model Plan {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  meta        Json     @default("{}")
+  notes       Note[]   // all notes under this plan
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+}
