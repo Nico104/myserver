@@ -10,7 +10,7 @@ export class PlansService {
       where: { deletedAt: null },
       orderBy: [{ updatedAt: 'desc' }],
       select: {
-        id: true, name: true, descriptionMd: true, meta: true,
+        id: true, name: true, description: true, meta: true,
         createdAt: true, updatedAt: true, deletedAt: true,
       },
     });
@@ -22,7 +22,7 @@ export class PlansService {
       include: {
         notes: {
           where: { deletedAt: null },
-          orderBy: [{ orderIdx: 'asc' }, { createdAt: 'asc' }],
+          orderBy: [{ createdAt: 'asc' }],
         },
       },
     });
