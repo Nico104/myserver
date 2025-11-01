@@ -11,9 +11,9 @@ import { PlansModule } from './plans/plans.module';
 
 @Module({
   imports: [DiaryModule, TodosModule, TodolistModule, NotesModule, PlansModule],
-  controllers: [NotesController],
-  providers: [NotesService],
-  // controllers: [AppController],
-  // providers: [AppService],
+  // controllers: [NotesController],
+  // providers: [NotesService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
