@@ -8,6 +8,7 @@ export class TodosService {
   getAll() {
     return this.prisma.todo.findMany({
       where: { deletedAt: null },
+      include: { list: true },
       orderBy: [{ dueAt: 'asc' }, { createdAt: 'desc' }],
     });
   }
@@ -16,6 +17,7 @@ export class TodosService {
     return this.prisma.todo.findMany({
       where: { listId, deletedAt: null },
       orderBy: [{ dueAt: 'asc' }, { createdAt: 'desc' }],
+      include: { list: true },
     });
   }
 
@@ -23,6 +25,7 @@ export class TodosService {
     // Return even if soft-deleted? Keep it simple: only active
     return this.prisma.todo.findFirst({
       where: { id, deletedAt: null },
+      include: { list: true },
     });
   }
 
