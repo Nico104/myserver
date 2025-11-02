@@ -111,3 +111,81 @@ model StreakHit {
   @@unique([streakId, day]) // one hit per day per streak
   @@index([streakId, day])
 }
+
+
+
+
+enum Mode {
+  DRY
+  WET
+}
+
+model BreathHoldAttempt {
+  id                  String   @id @default(uuid())
+  day                 DateTime @db.Date       // calendar day of the attempt
+  mode                Mode     @default(DRY)
+  durationSec         Int                     // total hold duration
+  firstContractionSec Int?
+  contractions        Int?     @default(0)
+  notes               String?
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([day])
+}
+
+model BoxBreathingSet {
+  id           String   @id @default(uuid())
+  day          DateTime @db.Date
+  mode         Mode     @default(DRY)
+
+  inhaleSec    Int
+  hold1Sec     Int
+  exhaleSec    Int
+  hold2Sec     Int
+  cycles       Int                      // planned cycles
+  completed    Int?                     // completed cycles (optional)
+  notes        String?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([day])
+}
+
+model Co2TableRun {
+  id            String   @id @default(uuid())
+  day           DateTime @db.Date
+  mode          Mode     @default(DRY)
+
+  holdSec       Int                      // fixed breath-hold duration per round
+  restStartSec  Int                      // starting rest
+  restStepSec   Int                      // decrement per round (e.g. 15)
+  rounds        Int
+  completed     Int?                     // how many completed (optional)
+  notes         String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([day])
+}
+
+model O2TableRun {
+  id            String   @id @default(uuid())
+  day           DateTime @db.Date
+  mode          Mode     @default(DRY)
+
+  restSec       Int                      // fixed rest duration per round
+  holdStartSec  Int                      // starting hold
+  holdStepSec   Int                      // increment per round (e.g. 15)
+  rounds        Int
+  completed     Int?                     // how many completed (optional)
+  notes         String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([day])
+}
