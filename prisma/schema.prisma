@@ -92,10 +92,6 @@ model Streak {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   deletedAt    DateTime?
-
-  @@index([planId])
-  @@index([todoListId])
-  @@index([deletedAt])
 }
 
 model StreakHit {
