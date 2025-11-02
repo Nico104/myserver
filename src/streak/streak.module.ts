@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { StreakController } from './streak.controller';
 import { StreakService } from './streak.service';
+import { StreakController } from './streak.controller';
+// Adjust this import to your project (e.g. '@/prisma/prisma.service')
+import { PrismaService } from '../prisma.service';
 
 @Module({
   controllers: [StreakController],
-  providers: [StreakService]
+  providers: [StreakService, PrismaService],
 })
 export class StreakModule {}

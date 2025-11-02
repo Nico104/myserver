@@ -62,3 +62,56 @@ model Plan {
   updatedAt   DateTime @updatedAt
   deletedAt   DateTime?
 }
+
+
+//TODO
+//extend with Streaks. that basically lets me track a Streack fo a specific thing
+enum Cadence {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+model Streak {
+  id           String     @id @default(uuid())
+  name         String
+  description  String?
+  cadence      Cadence    @default(DAILY)
+  tz           String     @default("Europe/Vienna") // IANA tz used for “today”
+  graceDays    Int        @default(1)
+
+  hits         StreakHit[]
+
+  // denorms (optional but nice for dashboards)
+  lastHitOn    DateTime?  @db.Date
+  currentLen   Int        @default(0)
+  longestLen   Int        @default(0)
+
+  startedOn    DateTime?  @db.Date
+  endedOn      DateTime?  @db.Date
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  deletedAt    DateTime?
+
+  @@index([planId])
+  @@index([todoListId])
+  @@index([deletedAt])
+}
+
+model StreakHit {
+  id        String   @id @default(uuid())
+  streakId  String
+  streak    Streak   @relation(fields: [streakId], references: [id], onDelete: Cascade)
+
+  // store calendar days unambiguously
+  day       DateTime @db.Date
+
+  source    String?  // "manual" | "auto" | etc.
+  meta      Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@unique([streakId, day]) // one hit per day per streak
+  @@index([streakId, day])
+}
