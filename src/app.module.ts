@@ -9,9 +9,10 @@ import { NotesService } from './notes/notes.service';
 import { NotesModule } from './notes/notes.module';
 import { PlansModule } from './plans/plans.module';
 import { StreakModule } from './streak/streak.module';
+import { BreathModule } from './breath/breath.module';
 
 @Module({
-  imports: [DiaryModule, TodosModule, TodolistModule, NotesModule, PlansModule, StreakModule],
+  imports: [DiaryModule, TodosModule, TodolistModule, NotesModule, PlansModule, StreakModule, BreathModule],
   // controllers: [NotesController],
   // providers: [NotesService],
   controllers: [AppController],
